@@ -1,3 +1,27 @@
+Raphael.fn.dotchart = function(values) {
+  function render_series(paper, series_values, offset, max) {
+    var width = paper.width / series_values.length;
+
+    for ( var i = 0; i < series_values.length; i++ ) {
+      var x = (i * width) + width / 2;
+      var y = offset + width / 2;
+
+      paper.circle( x, y, series_values[i] / max * width / 2).attr({"fill": "lightblue", "stroke-width": 0});
+    }
+  }
+
+  if (this.raphael.is(values[0], "array")) {
+    var max = 0;
+    for ( var i = 0; i < values.length; i++ ) {
+      max = Math.max( Math.max.apply( Math, values[i] ) );
+    }
+  } else {
+    var max = Math.max.apply( Math, values );
+    render_series( this, values, 0, max );
+  }
+  
+}
+
 Raphael.fn.barchart = function(values) {
   var colors = [ "#55B1E3", "#94B93D", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
                    "#6C3290", "#175E6A", "#818D97", "#D8B304"];
@@ -89,7 +113,7 @@ Raphael.fn.stackedbarchart = function(values) {
 };
 
 Raphael.fn.stackedlinechart = function(values) {
-  var colors = [ "#55B1E3", "#A0D9F5", "#94B93D", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
+  var colors = [ "lightpink", "darkgray", "lightblue", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
                    "#6C3290", "#175E6A", "#818D97", "#D8B304"];
   
   var len = 0;
