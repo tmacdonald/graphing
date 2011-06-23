@@ -13,7 +13,12 @@ Raphael.fn.dotchart = function(values) {
   if (this.raphael.is(values[0], "array")) {
     var max = 0;
     for ( var i = 0; i < values.length; i++ ) {
-      max = Math.max( Math.max.apply( Math, values[i] ) );
+      max = Math.max( max, Math.max.apply( Math, values[i] ) );
+    }
+    console.log(max);
+    for ( var i = 0; i < values.length; i++ ) {
+      console.log(values[i]);
+      render_series( this, values[i], i * this.height / values.length, max );
     }
   } else {
     var max = Math.max.apply( Math, values );
