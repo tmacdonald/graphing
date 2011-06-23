@@ -1,0 +1,29 @@
+<!doctype html>
+<head>
+  <script src="raphael.js"></script>
+  <script src="graphing.js"></script>
+</head>
+
+<body>
+
+
+  <script>
+    var r = Raphael(0,0,1024,480);
+
+    var data = [];
+    for ( var i = 0; i < 3; i++ ) {
+      var ys = [];
+      for ( var j = 0; j < 10; j++ ) {
+        ys.push( Math.floor(Math.random() * 100) );
+      }
+      data.push(ys);
+    }
+
+    //r.linechart(data);
+    //r.stackedlinechart(data);
+    r.barchart(data);
+    //r.stackedbarchart(data);
+  </script>
+</body>
+
+</html>
