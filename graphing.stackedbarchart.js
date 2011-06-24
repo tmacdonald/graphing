@@ -8,6 +8,9 @@ Raphael.fn.stackedbarchart = function( values, opts ) {
   opts.width = opts.width || this.width - opts.x;
   opts.height = opts.height || this.height - opts.y;
 
+  var chart = {};
+  chart.bars = [];
+
   var len = 0;
   var l = values.length;
   for ( var i = 0; i < l; i++ ) {
@@ -46,7 +49,7 @@ Raphael.fn.stackedbarchart = function( values, opts ) {
       
       var bar = this.path("M " + x1 + " " + y1 + " V " + y2 + " H " + x2 + " V " + y1 + " H " + x1)
           .attr({"stroke-width": 1, stroke: "#fff", fill: colors[j]});
-      
+
       y = y2;
     }
   }

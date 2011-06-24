@@ -25,7 +25,7 @@ Raphael.fn.polarchart = function( values, opts ) {
 
   var cx = opts.x + opts.width / 2;
   var cy = opts.y + opts.height / 2;
-  var radius = Math.min( opts.width / 2, opts.height / 2 ) / values.length;;
+  var radius = Math.min( opts.width / 2, opts.height / 2 ) / values.length;
 
   var offsets = [];
   for ( var i = 0; i < values[0].length; i++ ) {
