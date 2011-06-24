@@ -20,7 +20,9 @@ Raphael.fn.segment = function ( cx, cy, r1, r2, sa, a ) {
   
   var x4 = cx + Math.sin(sa + a) * r1;
   var y4 = cy + Math.cos(sa + a) * r1;
+
+  var largearc = (a > Math.PI) ? 1 : 0;
   
-  return this.path("M " + x1 + " " + y1 + " L " + x2 + " " + y2 + " A " + r2 + " " + r2 + " 0 0 0 " + x3 + " " + y3 + " L " + x4 + " " + y4 + " A " + r1 + " " + r1 + " 0 0 1 " + x1 + " " + y1); 
+  return this.path("M " + x1 + " " + y1 + " L " + x2 + " " + y2 + " A " + r2 + " " + r2 + " 0 " + largearc + " 0 " + x3 + " " + y3 + " L " + x4 + " " + y4 + " A " + r1 + " " + r1 + " 0 " + largearc + " 1 " + x1 + " " + y1); 
 };
 
