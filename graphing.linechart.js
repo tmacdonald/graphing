@@ -1,6 +1,5 @@
 Raphael.fn.linechart = function(values, opts) {
-  var colors = [ "#55B1E3", "#94B93D", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
-                   "#6C3290", "#175E6A", "#818D97", "#D8B304"];
+  var colors = [ "lightpink", "darkgray", "lightblue" ];
 
   var opts = opts || {};
 
@@ -13,7 +12,7 @@ Raphael.fn.linechart = function(values, opts) {
   chart.lines = [];
                 
   var max = Math.max.apply(Math, values);
-  var column_width = opts.width / values.length;
+  var column_width = opts.width / ( values.length - 1 );
   var column_height = opts.height;
   
   function render_series(paper, series_values) {
@@ -32,7 +31,7 @@ Raphael.fn.linechart = function(values, opts) {
   
   if ( this.raphael.is( values[0], "array") ) {
     max = 0;
-    column_width = opts.width / values[0].length;
+    column_width = opts.width / ( values[0].length - 1 );
     for ( var i = 0; i < values.length; i++ ) {
       max = Math.max( max, Math.max.apply( Math, values[i] ) );
     }

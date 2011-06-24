@@ -16,13 +16,12 @@
 
   <script>
     var r = Raphael(0,0,1024,768);
-    r.rect( 10, 10, 400, 200 );
 
     var data = [];
     var series = 3;
     for ( var i = 0; i < series; i++ ) {
       var ys = [];
-      var values = 20;
+      var values = 12;
       for ( var j = 0; j < values; j++ ) {
         ys.push( Math.sin(j /values * Math.PI * 2) + Math.floor(Math.random() * 100 ) );
       }
@@ -30,8 +29,11 @@
     }
 
     r.linechart(data, { x: 10, y: 10, width: 400, height: 200 } );
+    r.rect( 10, 10, 400, 200 );
     r.linechart(data[0], { x: 420, y: 10, width: 400, height: 200 } );
-    //r.stackedlinechart(data);
+    r.rect( 420, 10, 400, 200 );
+    r.stackedlinechart(data, { x: 10, y: 220, width: 810, height: 200 } );
+    r.rect( 10, 220, 810, 200 );
     //r.barchart(data);
     //r.stackedbarchart(data);
     //r.dotchart(data);

@@ -1,6 +1,16 @@
-Raphael.fn.stackedlinechart = function(values) {
+Raphael.fn.stackedlinechart = function(values, opts) {
   var colors = [ "lightpink", "darkgray", "lightblue", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
                    "#6C3290", "#175E6A", "#818D97", "#D8B304"];
+
+  var opts = opts || {};
+
+  opts.x = opts.x || 0;
+  opts.y = opts.y || 0;
+  opts.width = opts.width || this.width - opts.x;
+  opts.height = opts.height || this.height - opts.y;
+
+  var chart = {};
+  chart.areas = [];
   
   var len = 0;
   var l = values.length;
@@ -26,8 +36,8 @@ Raphael.fn.stackedlinechart = function(values) {
   }  
   
   var max = Math.max.apply(Math, maximums);
-  var column_width = this.width / len;
-  var column_height = this.height;
+  var column_width = opts.width / ( len - 1 );
+  var column_height = opts.height;
   
   var current = [];
   for ( var i = 0; i < len; i++ ) {
@@ -50,9 +60,10 @@ Raphael.fn.stackedlinechart = function(values) {
     var pathString = "";
     for ( var j = 0; j < path.length; j++ ) {
        var op = ( j == 0 ) ? "M" : "L";
-       pathString += op + " " + path[j].x + " " + path[j].y + " ";
+       pathString += op + " " + (opts.x + path[j].x) + " " + (opts.y + path[j].y) + " ";
      }
     
-     this.path(pathString).attr({"stroke-width": 1, stroke: "#fff", fill: colors[i]});
+     chart.areas.push( this.path(pathString).attr({"stroke-width": 1, stroke: "#fff", fill: colors[i]}) );
   }
+  return chart;
 };
