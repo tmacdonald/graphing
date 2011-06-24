@@ -7,6 +7,7 @@ Raphael.fn.piechart = function( values, opts ) {
   opts.y = opts.y || 0;
   opts.width = opts.width || this.width - opts.x;
   opts.height = opts.height || this.height - opts.y;
+  opts.inner_radius = opts.inner_radius || 0;
 
   var total = 0;
   for ( var i = 0; i < values.length; i++ ) {

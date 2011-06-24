@@ -7,6 +7,7 @@ Raphael.fn.polarchart = function( values, opts ) {
   opts.y = opts.y || 0;
   opts.width = opts.width || this.width - opts.x;
   opts.height = opts.height || this.height - opts.y;
+  opts.sorted = opts.sorted || false;
 
   if ( !this.raphael.is(values[0], "array") ) {
     values = [values];
@@ -32,19 +33,35 @@ Raphael.fn.polarchart = function( values, opts ) {
     offsets.push(0);
   }
 
-  for ( var i = 0; i < values.length; i++ ) {
-    var rads = Math.PI * 2 / values[i].length;
-    for ( var j = 0; j < values[i].length; j++ ) {
-      var r1 = offsets[j];
-      var r2 = offsets[j] + radius * values[i][j] / max;
+  var len = values[0].length;
 
-      var a1 = j * rads;
-      var a2 = (j + 1) * rads;
+  var rads = Math.PI * 2 / len;
+  for ( var i = 0; i < len; i++ ) {
+    var processed_values = [];
+    for ( var j = 0; j < values.length; j++ ) {
+      processed_values.push( { index: j, value: values[j][i] / max } );
+    }
+
+    function sort_impl( a, b ) {
+      return a.value - b.value;
+    }
+
+    if ( opts.sorted ) {
+      processed_values.sort( sort_impl );
+    }
+
+    var offset = 0;
+    for ( var j = 0; j < processed_values.length; j++ ) {
+      var r1 = offset;
+      var r2 = offset + radius * processed_values[j].value;
+
+      var a1 = i * rads;
+      var a2 = (i + 1) * rads;
 
       this.segment( cx, cy, r1, r2, a1, a2 - a1 )
-        .attr({"stroke-width": 0, fill: colors[i]});
+        .attr( { "stroke-width": 0, fill: colors[processed_values[j].index] } );
 
-      offsets[j] += radius * values[i][j] / max;
+      offset += radius * processed_values[j].value;
     }
   }
 };
