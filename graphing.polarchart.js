@@ -1,5 +1,12 @@
-Raphael.fn.polarchart = function( values ) {
+Raphael.fn.polarchart = function( values, opts ) {
   var colors = ["lightpink","darkgray","lightblue","yellow","blue","green","red","black","gray","orange","red"];
+
+  var opts = opts || {};
+
+  opts.x = opts.x || 0;
+  opts.y = opts.y || 0;
+  opts.width = opts.width || this.width - opts.x;
+  opts.height = opts.height || this.height - opts.y;
 
   if (this.raphael.is(values[0], "array")) {
 
@@ -14,9 +21,9 @@ Raphael.fn.polarchart = function( values ) {
       max = Math.max( max, Math.max.apply( Math, values[i] ) );
     }
 
-    var cx = this.width / 2;
-    var cy = this.height / 2;
-    var radius = Math.min( cx, cy ) / values.length;;
+    var cx = opts.x + opts.width / 2;
+    var cy = opts.y + opts.height / 2;
+    var radius = Math.min( opts.width / 2, opts.height / 2 ) / values.length;;
 
     var offsets = [];
     for ( var i = 0; i < values[0].length; i++ ) {
