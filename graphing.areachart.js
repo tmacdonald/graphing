@@ -1,5 +1,5 @@
 Raphael.fn.stackedlinechart = function(values, opts) {
-  var colors = [ "lightpink", "darkgray", "lightblue", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
+  var colors = [ "lightblue", "darkgray", "lightpink", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
                    "#6C3290", "#175E6A", "#818D97", "#D8B304"];
 
   var opts = opts || {};

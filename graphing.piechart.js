@@ -28,8 +28,11 @@ Raphael.fn.piechart = function( values, opts ) {
 
     var x2 = cx + Math.sin( offset ) * r;
     var y2 = cy + Math.cos( offset ) * r;
+    
+    var largearc = (rads > Math.PI) ? 1 : 0;
 
-    var path = ( "M " + cx + " " + cy + " L " + x1 + " " + y1 + " A " + r + " " + r + " 0 0 0 " + x2 + " " + y2 + " L " + cx + " " + cy );
+    var path = ( "M " + cx + " " + cy + " L " + x1 + " " + y1 + " A " + r + " " + r + " 0 " + largearc + " 0 " + x2 + " " + y2 + " L " + cx + " " + cy );
+    console.log(path);
     this.path(path).attr({"stroke-width": 0, fill: colors[i]});
   }
 };

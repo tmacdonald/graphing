@@ -17,16 +17,15 @@ Raphael.fn.dotchart = function(values, opts) {
     }
   }
 
-  if (this.raphael.is(values[0], "array")) {
-    var max = 0;
-    for ( var i = 0; i < values.length; i++ ) {
-      max = Math.max( max, Math.max.apply( Math, values[i] ) );
-    }
-    for ( var i = 0; i < values.length; i++ ) {
-      render_series( this, values[i], i * opts.height / values.length, max );
-    }
-  } else {
-    var max = Math.max.apply( Math, values );
-    render_series( this, values, 0, max );
+  if ( !this.raphael.is( values[0], "array" ) ) {
+    values = [values];
+  }
+
+  var max = 0;
+  for ( var i = 0; i < values.length; i++ ) {
+    max = Math.max( max, Math.max.apply( Math, values[i] ) );
+  }
+  for ( var i = 0; i < values.length; i++ ) {
+    render_series( this, values[i], i * opts.height / values.length, max );
   }
 };

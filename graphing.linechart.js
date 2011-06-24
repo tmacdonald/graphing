@@ -1,5 +1,6 @@
 Raphael.fn.linechart = function(values, opts) {
-  var colors = [ "lightpink", "darkgray", "lightblue" ];
+  var colors = [ "lightblue", "darkgray", "lightpink", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
+                   "#6C3290", "#175E6A", "#818D97", "#D8B304"];
 
   var opts = opts || {};
 
@@ -28,20 +29,20 @@ Raphael.fn.linechart = function(values, opts) {
     }
     return paper.path( path ).attr( { "stroke-width": 1 } ); 
   }
+ 
+  if ( !this.raphael.is( values[0], "array" ) ) {
+    values = [values];
+  }
+   
+  max = 0;
+  column_width = opts.width / ( values[0].length - 1 );
+  for ( var i = 0; i < values.length; i++ ) {
+    max = Math.max( max, Math.max.apply( Math, values[i] ) );
+  }
   
-  if ( this.raphael.is( values[0], "array") ) {
-    max = 0;
-    column_width = opts.width / ( values[0].length - 1 );
-    for ( var i = 0; i < values.length; i++ ) {
-      max = Math.max( max, Math.max.apply( Math, values[i] ) );
-    }
-    
-    for ( var i = 0; i < values.length; i++ ) {
-      chart.lines.push( render_series( this, values[i] )
-        .attr( {"stroke-width": 2, stroke: colors[i] } ) );
-    }
-  } else {
-    chart.lines.push( render_series( this, values ).attr( { stroke: colors[0] } ) );
+  for ( var i = 0; i < values.length; i++ ) {
+    chart.lines.push( render_series( this, values[i] )
+      .attr( {"stroke-width": 2, stroke: colors[i] } ) );
   }
 
   return chart;

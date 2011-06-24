@@ -28,20 +28,19 @@ Raphael.fn.barchart = function(values, opts) {
     
     return paper.path(path);
   }
+ 
+  if ( !this.raphael.is( values[0], "array" ) ) {
+    values = [values];
+  }
   
-  if (this.raphael.is(values[0], "array")) {
-    max = 0;
-    column_width = opts.width / (values[0].length * values.length);
-    for ( var i = 0; i < values.length; i++ ) {
-      max = Math.max(max, Math.max.apply(Math, values[i]));
-    }
-    
-    for ( var i = 0; i < values.length; i++ ) {
-      render_series(this, values[i], column_width * values.length, column_width * i)
-        .attr({stroke: "#fff", fill: colors[i]});
-    }
-  } else {
-    render_series(this, values, column_width, 0)
-      .attr( { stroke: "#fff", fill: colors[0] } );
+  max = 0;
+  column_width = opts.width / (values[0].length * values.length);
+  for ( var i = 0; i < values.length; i++ ) {
+    max = Math.max(max, Math.max.apply(Math, values[i]));
+  }
+  
+  for ( var i = 0; i < values.length; i++ ) {
+    render_series(this, values[i], column_width * values.length, column_width * i)
+      .attr({stroke: "#fff", fill: colors[i]});
   }
 };
