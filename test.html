@@ -15,24 +15,28 @@
 
 
   <script>
-    var r = Raphael(0,0,1024,480);
+    var r = Raphael(0,0,1024,768);
+    r.rect( 10, 10, 400, 200 );
 
     var data = [];
-    for ( var i = 0; i < 3; i++ ) {
+    var series = 3;
+    for ( var i = 0; i < series; i++ ) {
       var ys = [];
-      for ( var j = 0; j < 10; j++ ) {
-        ys.push( Math.floor(Math.random() * 100) );
+      var values = 20;
+      for ( var j = 0; j < values; j++ ) {
+        ys.push( Math.sin(j /values * Math.PI * 2) + Math.floor(Math.random() * 100 ) );
       }
       data.push(ys);
     }
 
-    //r.linechart(data);
+    r.linechart(data, { x: 10, y: 10, width: 400, height: 200 } );
+    r.linechart(data[0], { x: 420, y: 10, width: 400, height: 200 } );
     //r.stackedlinechart(data);
     //r.barchart(data);
     //r.stackedbarchart(data);
     //r.dotchart(data);
     //r.piechart(data[0]);
-    r.polarchart(data);
+    //r.polarchart(data);
   </script>
 </body>
 
