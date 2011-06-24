@@ -41,6 +41,7 @@ Raphael.fn.barchart = function(values, opts) {
         .attr({stroke: "#fff", fill: colors[i]});
     }
   } else {
-    render_series(this, values);
+    render_series(this, values, column_width, 0)
+      .attr( { stroke: "#fff", fill: colors[0] } );
   }
 };

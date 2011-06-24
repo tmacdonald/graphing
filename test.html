@@ -15,7 +15,7 @@
 
 
   <script>
-    var r = Raphael(0,0,1024,768);
+    var r = Raphael(0,0,1024,1024);
 
     var data = [];
     var series = 3;
@@ -36,7 +36,10 @@
     r.rect( 10, 220, 810, 200 );
     r.barchart(data, { x: 10, y: 430, width: 400, height: 200 } );
     r.rect( 10, 430, 400, 200 );
-    //r.stackedbarchart(data);
+    r.barchart(data[0], { x: 420, y: 430, width: 400, height: 200 } );
+    r.rect( 420, 430, 400, 200 );
+    r.stackedbarchart(data, { x: 10, y: 640, width: 810, height: 200 } );
+    r.rect( 10, 640, 810, 200 );
     //r.dotchart(data);
     //r.piechart(data[0]);
     //r.polarchart(data);

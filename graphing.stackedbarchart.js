@@ -1,7 +1,13 @@
-Raphael.fn.stackedbarchart = function(values) {
-  var colors = [ "#55B1E3", "#A0D9F5", "#94B93D", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
-                   "#6C3290", "#175E6A", "#818D97", "#D8B304"];
-  
+Raphael.fn.stackedbarchart = function( values, opts ) {
+  var colors = [ "lightblue", "darkgray", "lightpink" ];
+    
+  var opts = opts || {};
+
+  opts.x = opts.x || 0;
+  opts.y = opts.y || 0;
+  opts.width = opts.width || this.width - opts.x;
+  opts.height = opts.height || this.height - opts.y;
+
   var len = 0;
   var l = values.length;
   for ( var i = 0; i < l; i++ ) {
@@ -26,14 +32,14 @@ Raphael.fn.stackedbarchart = function(values) {
   }  
   
   var max = Math.max.apply(Math, maximums);
-  var column_width = this.width / len;
-  var column_height = this.height;
+  var column_width = opts.width / len;
+  var column_height = opts.height;
   
   for ( var i = 0; i < len; i++ ) {
-    var x1 = i * column_width;
-    var x2 = (i + 1) * column_width;
+    var x1 = opts.x + i * column_width;
+    var x2 = opts.x + (i + 1) * column_width;
     
-    var y = column_height;
+    var y = opts.y + column_height;
     for ( var j = 0; j < l; j++ ) {
       var y1 = y;
       var y2 = y - (column_height * values[j][i] / max ); 
