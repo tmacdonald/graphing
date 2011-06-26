@@ -44,6 +44,15 @@ Raphael.fn.linechart = function(values, opts) {
   
   for ( var i = 0; i < values.length; i++ ) {
     var points = get_points_from_values( values[i] );
+
+    if ( opts.draw_point ) {
+      for ( var p = 0; p < points.length; p++ ) {
+        var point = points[p];
+        point.color = colors[i];
+        opts.draw_point.call( point );
+      }
+    }
+
     var path = create_path_from_points( points );
     chart.lines.push( this.path( path )
       .attr( {"stroke-width": 2, stroke: colors[i] } ) );

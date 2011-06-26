@@ -23,6 +23,10 @@
       data.push(ys);
     }
 
+    function draw_point() {
+      r.circle( this.x, this.y, 10 ).attr( { stroke: this.color } );
+    }
+
     r.grid( 10, 10, 400, 200, 0, 11 ).attr( { stroke: "#ccc" } );
     r.linechart(data, { x: 10, y: 10, width: 400, height: 200 } );
     r.rect( 10, 10, 400, 200 );
@@ -35,6 +39,10 @@
     r.linechart(data, { x: 830, y: 10, width: 400, height: 200, max_y: 5 } );
     r.rect( 830, 10, 400, 200 );
 
+    r.grid( 1240, 10, 400, 200, 0, 11 ).attr( { stroke: "#ccc" } );
+    r.linechart(data, { x: 1240, y: 10, width: 400, height: 200, draw_point: draw_point } );
+    r.rect( 1240, 10, 400, 200 );
+
     r.grid( 10, 220, 400, 200, 0, 11 ).attr( { stroke: "#ccc" } );
     r.linechart(data[0], { x: 10, y: 220, width: 400, height: 200 } );
     r.rect( 10, 220, 400, 200 );
@@ -46,6 +54,10 @@
     r.grid( 830, 220, 400, 200, 0, 11 ).attr( { stroke: "#ccc" } );
     r.linechart(data[0], { x: 830, y: 220, width: 400, height: 200, max_y: 5 } );
     r.rect( 830, 220, 400, 200 );
+
+    r.grid( 1240, 220, 400, 200, 0, 11 ).attr( { stroke: "#ccc" } );
+    r.linechart(data[0], { x: 1240, y: 220, width: 400, height: 200, draw_point: draw_point } );
+    r.rect( 1240, 220, 400, 200 );
 
     r.grid( 10, 430, 810, 200, 0, 11 ).attr( { stroke: "#ccc" } );
     var areachart = r.areachart(data, { x: 10, y: 430, width: 810, height: 200 } );
