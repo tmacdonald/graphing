@@ -15,6 +15,18 @@ Raphael.fn.linechart = function(values, opts) {
   var max = Math.max.apply(Math, values);
   var column_width = opts.width / ( values.length - 1 );
   var column_height = opts.height;
+
+  function get_points_from_values( series_values ) {
+    var points = [];
+    var l = series_values.length;
+    for ( var i = 0; i < l; i++ ) {
+      var x = opts.x + i * column_width;
+      var y = opts.y + column_height - ( column_height * ( series_values[i] / max ) );
+
+      points.push( { x: x, y: y } );
+    }
+    return points;
+  }
   
   function render_series(paper, series_values) {
     var path = "";
@@ -41,8 +53,17 @@ Raphael.fn.linechart = function(values, opts) {
   }
   
   for ( var i = 0; i < values.length; i++ ) {
-    chart.lines.push( render_series( this, values[i] )
+    var points = get_points_from_values( values[i] );
+    var path = create_path_from_points( points );
+    chart.lines.push( this.path( path )
       .attr( {"stroke-width": 2, stroke: colors[i] } ) );
+
+    if ( opts.include_area ) {
+      points.push( { x: opts.x + opts.width, y: opts.y + opts.height } );
+      points.push( { x: opts.x, y: opts.y + opts.height } );
+    
+      this.path( create_path_from_points( points ) ).attr( { "stroke-width": 0, fill: colors[i], "fill-opacity": 0.5 } );
+    }
   }
 
   return chart;
