@@ -47,6 +47,10 @@ Raphael.fn.areachart = function(values, opts) {
   var max = Math.max.apply(Math, maximums);
   var column_width = opts.width / ( len - 1 );
   var column_height = opts.height;
+
+  if ( opts.max_y ) {
+    max = opts.max_y;
+  }
   
   var current = [];
   for ( var i = 0; i < len; i++ ) {
@@ -79,8 +83,8 @@ Raphael.fn.areachart = function(values, opts) {
     var area = create_path_from_points( path ); 
     var line = create_path_from_points( paths[i][1] );
 
-    chart.areas.push( this.path( area ).attr({"stroke-width": 1, stroke: "#fff", fill: colors[ paths.length - i - 1]}) );
-    this.path( line ).attr( { "stroke-width": 3, stroke: colors[ paths.length - i - 1] } );
+    chart.areas.push( this.path( area ).attr({"stroke-width": 1, stroke: "#fff", fill: colors[i]}) );
+    this.path( line ).attr( { "stroke-width": 3, stroke: colors[ i ] } );
   }
 
   return chart;

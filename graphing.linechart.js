@@ -28,20 +28,6 @@ Raphael.fn.linechart = function(values, opts) {
     return points;
   }
   
-  function render_series(paper, series_values) {
-    var path = "";
-    var l = series_values.length;
-    for ( var k = 0; k < l; k++ ) {
-      var x = opts.x + k * column_width;
-      var y = opts.y + column_height - (column_height * (series_values[k] / max));
-      
-      var op = (k === 0) ? "M" : "L";
-      
-      path += op + " " + x + " " + y + " ";
-    }
-    return paper.path( path ).attr( { "stroke-width": 1 } ); 
-  }
- 
   if ( !this.raphael.is( values[0], "array" ) ) {
     values = [values];
   }
@@ -50,6 +36,10 @@ Raphael.fn.linechart = function(values, opts) {
   column_width = opts.width / ( values[0].length - 1 );
   for ( var i = 0; i < values.length; i++ ) {
     max = Math.max( max, Math.max.apply( Math, values[i] ) );
+  }
+  
+  if ( opts.max_y ) {
+    max = opts.max_y;
   }
   
   for ( var i = 0; i < values.length; i++ ) {
