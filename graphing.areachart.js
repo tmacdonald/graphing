@@ -1,4 +1,13 @@
-Raphael.fn.stackedlinechart = function(values, opts) {
+function create_path_from_points( points ) {
+  var path= "";
+  for ( var j = 0; j < points.length; j++ ) {
+    var op = ( j == 0 ) ? "M" : "L";
+    path += op + " " + points[j].x + " " + points[j].y + " ";
+  }
+  return path;
+}
+
+Raphael.fn.areachart = function(values, opts) {
   var colors = [ "lightblue", "darkgray", "lightpink", "#AF2C31", "#175E6A", "#6C8CC7", "#CD8215",
                    "#6C3290", "#175E6A", "#818D97", "#D8B304"];
 
@@ -10,7 +19,7 @@ Raphael.fn.stackedlinechart = function(values, opts) {
   opts.height = opts.height || this.height - opts.y;
 
   var chart = {};
-  chart.areas = [];
+  chart.areas = this.set();
   
   var len = 0;
   var l = values.length;
@@ -44,26 +53,35 @@ Raphael.fn.stackedlinechart = function(values, opts) {
     current.push(0);
   }
   
+  var paths = [];
+
   for ( var i = 0; i < l; i++ ) {
-    var path = [];
+    var last_path = [];
+    var this_path = [];
     
     for ( var j = 0; j < len; j++ ) {
-      path.push( {x: j * column_width, y: column_height - (column_height * current[j] / max)} );
+      last_path.push( {x: opts.x + j * column_width, y: opts.y +  ( column_height - (column_height * current[j] / max) )} );
       current[j] += values[i][j];
     }
     for ( var j = len - 1; j >= 0; j-- ) {
-      path.push( {x: j * column_width, y: column_height - (column_height * current[j] / max)} ); 
+      this_path.push( {x: opts.x + j * column_width, y: opts.y + ( column_height - (column_height * current[j] / max) )} ); 
     }
     
-    path.push( path[0] );
-    
-    var pathString = "";
-    for ( var j = 0; j < path.length; j++ ) {
-       var op = ( j == 0 ) ? "M" : "L";
-       pathString += op + " " + (opts.x + path[j].x) + " " + (opts.y + path[j].y) + " ";
-     }
-    
-     chart.areas.push( this.path(pathString).attr({"stroke-width": 1, stroke: "#fff", fill: colors[i]}) );
+    paths.push( [ last_path, this_path ] );
   }
+
+  for ( var i = paths.length - 1; i >= 0; i-- ) {
+    var path = [];
+    path = path.concat( paths[i][0] );
+    path = path.concat( paths[i][1] );
+    path.push( path[0] );
+     
+    var area = create_path_from_points( path ); 
+    var line = create_path_from_points( paths[i][1] );
+
+    chart.areas.push( this.path( area ).attr({"stroke-width": 1, stroke: "#fff", fill: colors[ paths.length - i - 1]}) );
+    this.path( line ).attr( { "stroke-width": 3, stroke: colors[ paths.length - i - 1] } );
+  }
+
   return chart;
 };

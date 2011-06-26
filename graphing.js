@@ -26,3 +26,17 @@ Raphael.fn.segment = function ( cx, cy, r1, r2, sa, a ) {
   return this.path("M " + x1 + " " + y1 + " L " + x2 + " " + y2 + " A " + r2 + " " + r2 + " 0 " + largearc + " 0 " + x3 + " " + y3 + " L " + x4 + " " + y4 + " A " + r1 + " " + r1 + " 0 " + largearc + " 1 " + x1 + " " + y1); 
 };
 
+Raphael.fn.grid = function ( x, y, width, height, rows, columns ) {
+  var grid = this.set();
+
+  for ( var row = 1; row < rows; row++ ) {
+    grid.push( this.path( "M " + x + " " + ( y + ( row * height / rows ) )  + " H " + ( x + width ) ) );
+  }
+
+  for ( var column = 1; column < columns; column++ ) {
+    grid.push( this.path( "M " + ( x + ( column * width / columns ) ) + " " + y + " V " + ( y + height ) ) );
+  }
+
+  return grid;
+}
+
