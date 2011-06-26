@@ -7,6 +7,7 @@ Raphael.fn.stackedbarchart = function( values, opts ) {
   opts.y = opts.y || 0;
   opts.width = opts.width || this.width - opts.x;
   opts.height = opts.height || this.height - opts.y;
+  opts.bar_width = opts.bar_width || opts.width / values.length;
 
   var chart = {};
   chart.bars = [];
@@ -37,10 +38,14 @@ Raphael.fn.stackedbarchart = function( values, opts ) {
   var max = Math.max.apply(Math, maximums);
   var column_width = opts.width / len;
   var column_height = opts.height;
+  opts.bar_width = Math.max( 0, Math.min( column_width, opts.bar_width ) );
+
+  var padding = ( opts.width - ( opts.bar_width * len ) ) / ( len + 1 );
+  opts.x += padding;
   
   for ( var i = 0; i < len; i++ ) {
-    var x1 = opts.x + i * column_width;
-    var x2 = opts.x + (i + 1) * column_width;
+    var x1 = opts.x + i * (opts.bar_width + padding );
+    var x2 = x1 + opts.bar_width;
     
     var y = opts.y + column_height;
     for ( var j = 0; j < l; j++ ) {

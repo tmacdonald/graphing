@@ -1,0 +1,41 @@
+<!doctype html>
+<head>
+  <script src="raphael.js"></script>
+  <script src="graphing.js"></script>
+  <script src="graphing.barchart.js"></script>
+  <script src="graphing.stackedbarchart.js"></script>
+</head>
+
+<body>
+
+
+  <script>
+    var r = Raphael(0,0,1680,1024);
+
+    var data = [];
+    var series = 3;
+    for ( var i = 0; i < series; i++ ) {
+      var ys = [];
+      var values = 12;
+      for ( var j = 0; j < values; j++ ) {
+        ys.push( Math.sin(j /values * Math.PI * 2) + Math.floor(Math.random() * 100 ) );
+      }
+      data.push(ys);
+    }
+
+    r.barchart( data, { x: 10, y: 10, width: 400, height: 200 } );
+    r.rect( 10, 10, 400, 200 );
+    r.barchart( data, { x: 420, y: 10, width: 400, height: 200, bar_width: 8 } );
+    r.rect( 420, 10, 400, 200 );
+    r.barchart( data[0], { x: 10, y: 220, width: 400, height: 200 } );
+    r.rect( 10, 220, 400, 200 );
+    r.barchart( data[0], { x: 420, y: 220, width: 400, height: 200, bar_width: 15 } );
+    r.rect( 420, 220, 400, 200 );
+    r.stackedbarchart( data, { x: 10, y: 430, width: 400, height: 200 } );
+    r.rect( 10, 430, 400, 200 );
+    r.stackedbarchart( data, { x: 420, y: 430, width: 400, height: 200, bar_width: 25 } );
+    r.rect( 420, 430, 400, 200 );
+  </script>
+</body>
+
+</html>

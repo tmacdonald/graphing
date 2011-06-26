@@ -7,6 +7,7 @@ Raphael.fn.barchart = function(values, opts) {
   opts.y = opts.y || 0;
   opts.width = opts.width || this.width - opts.x;
   opts.height = opts.height || this.height - opts.y;
+  opts.bar_width = opts.bar_width || opts.width / values.length;
 
   var max = Math.max.apply(Math, values);
   var column_width = opts.width / values.length;
@@ -17,8 +18,8 @@ Raphael.fn.barchart = function(values, opts) {
     
     var l = series_values.length;
     for ( var i = 0; i < l; i++ ) {
-      var x1 = opts.x + offset + i * (total_column_width);
-      var x2 = x1 + column_width;
+      var x1 = opts.x + offset + i * ( total_column_width );
+      var x2 = x1 + opts.bar_width;
       
       var y1 = opts.y + column_height;
       var y2 = opts.y + column_height - (column_height * (series_values[i] / max));
@@ -34,13 +35,19 @@ Raphael.fn.barchart = function(values, opts) {
   }
   
   max = 0;
+  var len = values[0].length * values.length;
   column_width = opts.width / (values[0].length * values.length);
+  opts.bar_width = Math.max( 0, Math.min( column_width, opts.bar_width ) );
+
+  var padding = ( opts.width - opts.bar_width * len ) / ( len + 1 );  
+  opts.x += padding;
+  
   for ( var i = 0; i < values.length; i++ ) {
     max = Math.max(max, Math.max.apply(Math, values[i]));
   }
   
   for ( var i = 0; i < values.length; i++ ) {
-    render_series(this, values[i], column_width * values.length, column_width * i)
+    render_series( this, values[i], ( opts.bar_width + padding ) * values.length, column_width * i )
       .attr({stroke: "#fff", fill: colors[i]});
   }
 };
